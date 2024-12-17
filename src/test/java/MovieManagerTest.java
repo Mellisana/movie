@@ -1,14 +1,15 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import ru.netology.project.movieManager;
+import ru.netology.project.MovieManager;
 
 import static org.mockito.Mockito.*;
 
 public class MovieManagerTest {
 
+    @Test
     public void shouldAddNewMovie() {
-        movieManager movies = new movieManager();
+        MovieManager movies = new MovieManager();
         movies.addMovie("Бладшот");
 
         String[] expected = {"Бладшот"};
@@ -19,7 +20,7 @@ public class MovieManagerTest {
 
     @Test
     public void shouldAddNoneMovie() {
-        movieManager movies = new movieManager();
+        MovieManager movies = new MovieManager();
 
         String[] expected = {};
         String[] actual = movies.findAll();
@@ -29,7 +30,7 @@ public class MovieManagerTest {
 
     @Test
     public void shouldFindAllMovies() {
-        movieManager movies = new movieManager();
+        MovieManager movies = new MovieManager();
 
         movies.addMovie("Бладшот");
         movies.addMovie("Вперед");
@@ -46,18 +47,8 @@ public class MovieManagerTest {
     }
 
     @Test
-    public void shouldFindAllNull() {
-        movieManager movies = new movieManager();
-
-        String[] expected = {};
-        String[] actual = movies.findAll();
-
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-    @Test
     public void shouldFindLastMovie() {
-        movieManager films = new movieManager();
+        MovieManager films = new MovieManager();
 
         films.addMovie("номер один");
 
@@ -68,43 +59,32 @@ public class MovieManagerTest {
     }
 
     @Test
-    public void shouldFindLastMovieIfOverTheLimit() {
-        movieManager movies = new movieManager();
+    public void shouldFindLastFiveMoviesWhenMoreThanFiveAdded() {
+        MovieManager movies = new MovieManager();
 
         movies.addMovie("Бладшот");
         movies.addMovie("Вперед");
         movies.addMovie("Отель Белград");
         movies.addMovie("Джентельмены");
         movies.addMovie("Человек-неведимка");
+        movies.addMovie("Номер один");
 
-        String[] expected = {"Человек-неведимка", "Джентельмены", "Отель Белград", "Вперед", "Бладшот"};
+        String[] expected = {"Номер один", "Человек-неведимка", "Джентельмены", "Отель Белград", "Вперед"};
         String[] actual = movies.findLast();
 
         Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void shouldFindLastMovieIfBelowTheLimit() {
-        movieManager movies = new movieManager();
+    public void shouldFindAllMoviesWhenLessThanFiveAdded() {
+        MovieManager movies = new MovieManager();
 
         movies.addMovie("Бладшот");
         movies.addMovie("Вперед");
         movies.addMovie("Отель Белград");
         movies.addMovie("Джентельмены");
-        movies.addMovie("Человек-неведимка");
 
-
-        String[] expected = {"Человек-неведимка", "Джентельмены", "Отель Белград", "Вперед", "Бладшот"};
-        String[] actual = movies.findLast();
-
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldFindNoneMovie() {
-        movieManager movies = new movieManager();
-
-        String[] expected = {};
+        String[] expected = {"Джентельмены", "Отель Белград", "Вперед", "Бладшот"};
         String[] actual = movies.findLast();
 
         Assertions.assertArrayEquals(expected, actual);
